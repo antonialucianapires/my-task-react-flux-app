@@ -6,21 +6,18 @@ class ToDoItem extends Component {
   };
 
   render() {
-    const { props } = (this.item = props.item);
+    const { props } = this,
+      item = props.item;
     return (
       <li className="todo-list-item">
-        <input
-          className="tw-check"
-          type="checkbox"
-          checked={this.item.isChecked}
-        />
+        <input className="tw-check" type="checkbox" checked={item.isChecked} />
         <input
           className="tw-input"
           type="text"
-          disabled={this.item.isChecked}
-          defaultValue={this.item.description}
+          disabled={item.isChecked}
+          defaultValue={item.description}
         />
-        <button className="tw-tbn">X</button>
+        <button className="tw-btn">X</button>
       </li>
     );
   }

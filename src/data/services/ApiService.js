@@ -1,4 +1,4 @@
-const url = "http://localhost:3002/api/react-flux/tasks/";
+const url = "http://localhost:3002/api/react-flux/";
 
 export const ApiService = {
   get(endpoint) {
