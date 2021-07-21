@@ -2,6 +2,7 @@ import { Component } from "react";
 import "./App.css";
 import ToDoList from "./views/components/ToDoList";
 import { TodoService } from "./data/services/TodoService";
+import NewToDoItem from "./views/components/NewToDoItem";
 
 class App extends Component {
   constructor(props) {
@@ -9,6 +10,8 @@ class App extends Component {
     this.state = {
       todoList: [],
     };
+
+    this.add = this.add.bind(this);
   }
 
   async componentDidMount() {
@@ -16,10 +19,23 @@ class App extends Component {
     this.setState({ todoList });
   }
 
+  add(description) {
+    TodoService.create({
+      description,
+      isChecked: false,
+    }).then((newItem) => {
+      const { todoList } = this.state;
+      todoList.push(newItem);
+      this.setState({ todoList });
+    });
+  }
+
   render() {
     const { state } = this;
     return (
       <div className="App">
+        <NewToDoItem onAdd={this.add} />
+        <hr />
         <ToDoList items={state.todoList} />
       </div>
     );
