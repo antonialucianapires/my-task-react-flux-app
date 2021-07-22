@@ -1,4 +1,7 @@
 import { TodoService } from "./data/services/TodoService";
+import TodoConstants from "../constants/ToDoConstant";
+import AppDispatcher from "../dispatcher/AppDispatcher";
+
 import Events from "events";
 
 const Channel = new Events.EventEmitter(),
@@ -62,4 +65,28 @@ const TodoStore = {
   },
 };
 
+async function handleAction(action) {
+  switch (action.actionType) {
+    case TodoConstants.TODO_CREATE:
+      const description = action.description;
+      await createItem(description);
+      TodoStore.emitChange();
+      break;
+    case TodoConstants.TODO_UPDATE:
+      const item = action.item;
+      await updateItem(item);
+      TodoStore.emitChange();
+      break;
+    case TodoConstants.TODO_REMOVE:
+      const id = action.id;
+      await removeItem(id);
+      TodoStore.emitChange();
+    case TodoConstants.TODO_CLEAR:
+      clearAll();
+      TodoStore.emitChange();
+      break;
+  }
+}
+
+TodoStore.dispatchToken = AppDispatcher.register(handleAction);
 export default TodoStore;
