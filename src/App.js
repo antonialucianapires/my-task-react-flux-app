@@ -13,6 +13,7 @@ class App extends Component {
 
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);
+    this.update = this.update.bind(this);
   }
 
   async componentDidMount() {
@@ -34,9 +35,17 @@ class App extends Component {
   remove(id) {
     const { todoList } = this.state,
       itemIndex = todoList.findIndex((item) => item.id === id);
-
     todoList.splice(itemIndex, 1);
     TodoService.remove(id);
+    this.setState({ todoList });
+  }
+
+  update(newItem) {
+    const { todoList } = this.state,
+      itemIndex = todoList.findIndex((item) => item.id === newItem.id);
+
+    todoList[itemIndex] = newItem;
+    TodoService.update(newItem);
     this.setState({ todoList });
   }
 
@@ -46,7 +55,11 @@ class App extends Component {
       <div className="App">
         <NewToDoItem onAdd={this.add} />
         <hr />
-        <ToDoList items={state.todoList} onRemove={this.remove} />
+        <ToDoList
+          items={state.todoList}
+          onRemove={this.remove}
+          onUpdate={this.update}
+        />
       </div>
     );
   }
