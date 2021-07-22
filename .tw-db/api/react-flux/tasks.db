@@ -5,3 +5,7 @@
 {"description":"fazer compras 2","isChecked":false,"_id":"RZNFe9rh93xZnctA"}
 {"description":"fazer compras ","isChecked":false,"_id":"ipYxCFbrpQhxW4kU"}
 {"description":"outra coisa","isChecked":false,"_id":"RZNFe9rh93xZnctA"}
+{"$$deleted":true,"_id":"ipYxCFbrpQhxW4kU"}
+{"$$deleted":true,"_id":"RZNFe9rh93xZnctA"}
+{"description":"comprar fone","isChecked":false,"_id":"lC6XLufFnd7CNuO4"}
+{"description":"comprar fone","isChecked":true,"_id":"lC6XLufFnd7CNuO4"}

@@ -11,6 +11,7 @@ class ToDoItem extends Component {
     super(props);
     this.remove = this.remove.bind(this);
     this.update = this.update.bind(this);
+    this.check = this.check.bind(this);
 
     this.input = React.createRef();
   }
@@ -21,6 +22,12 @@ class ToDoItem extends Component {
   update() {
     const { item } = this.props;
     item.description = this.input.current.value;
+    this.props.onUpdate(item);
+  }
+
+  check() {
+    const { item } = this.props;
+    item.isChecked = !item.isChecked;
     this.props.onUpdate(item);
   }
 
