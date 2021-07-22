@@ -1,4 +1,4 @@
-import { TodoService } from "./data/services/TodoService";
+import { TodoService } from "../../data/services/TodoService";
 import TodoConstants from "../constants/ToDoConstant";
 import AppDispatcher from "../dispatcher/AppDispatcher";
 
@@ -19,7 +19,6 @@ function createItem(description) {
 
 function updateItem(newItem) {
   const itemIndex = _todoList.findIndex((item) => item.id === newItem.id);
-
   _todoList[itemIndex] = newItem;
   return TodoService.update(newItem);
 }
@@ -42,7 +41,7 @@ function clearAll() {
     }
   });
 
-  done.forEach((item) => this.removeItem(item.id));
+  done.forEach((item) => removeItem(item.id));
   _todoList = todo;
 }
 
@@ -51,7 +50,6 @@ const TodoStore = {
     if (_todoList.length === 0) {
       _todoList = await TodoService.getAll();
     }
-
     return _todoList;
   },
   emitChange() {
@@ -65,27 +63,28 @@ const TodoStore = {
   },
 };
 
-async function handleAction(action) {
-  switch (action.actionType) {
-    case TodoConstants.TODO_CREATE:
-      const description = action.description;
-      await createItem(description);
-      TodoStore.emitChange();
-      break;
-    case TodoConstants.TODO_UPDATE:
-      const item = action.item;
-      await updateItem(item);
-      TodoStore.emitChange();
-      break;
-    case TodoConstants.TODO_REMOVE:
-      const id = action.id;
-      await removeItem(id);
-      TodoStore.emitChange();
-    case TodoConstants.TODO_CLEAR:
-      clearAll();
-      TodoStore.emitChange();
-      break;
-  }
+async function handleAction(action){
+    switch(action.actionType){
+        case TodoConstants.TODO_CREATE:
+            const description = action.description;
+            await createItem(description);
+            TodoStore.emitChange();
+            break;
+        case TodoConstants.TODO_UPDATE:
+            const item = action.item;
+            await updateItem(item);
+            TodoStore.emitChange();
+            break;
+        case TodoConstants.TODO_REMOVE:
+            const id = action.id;
+            await removeItem(id);
+            TodoStore.emitChange();
+        case TodoConstants.TODO_CLEAR:
+            clearAll();
+            TodoStore.emitChange();
+            break;
+    }
+
 }
 
 TodoStore.dispatchToken = AppDispatcher.register(handleAction);
